@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd"><properties>
+    <entry key="api_base_url_production">https://services.applova.io</entry>
+    <entry key="merchant_registry_base_url_production">https://merchant-registry.applova.io</entry>
+
+    <entry key="api_base_url_production_appigo">https://services.appigo.co</entry>
+    <entry key="merchant_registry_base_url_production_appigo">https://merchant-registry.appigo.co</entry>
+
+    <entry key="api_base_url_test_bed">https://tb-services.applova.io</entry>
+    <entry key="merchant_registry_base_url_test_bed">https://merchant-registry.applova.io</entry>
+
+    <entry key="api_base_url_local_dev">http://192.168.30.171:9091</entry>
+    <entry key="terminal_payment_api_url_local_dev">http://192.168.30.171:1236</entry>
+    <entry key="merchant_registry_base_url_local_dev">http://192.168.30.171:9095</entry>
+    <entry key="remote_log_upload_base_url_local_dev">http://192.168.30.171:9071</entry>
+    <entry key="report_api_base_url_local_dev">http://192.168.30.171:9119</entry>
+
+    <entry key="api_base_url_local_emul">http://10.0.2.2:9091</entry>
+    <entry key="terminal_payment_api_url_local_emul">http://10.0.2.2:1236</entry>
+    <entry key="merchant_registry_base_url_local_emul">http://10.0.2.2:9095</entry>
+    <entry key="remote_log_upload_base_url_local_emul">http://10.0.2.2:9071</entry>
+    <entry key="report_api_base_url_local_emul">http://10.0.2.2:9119</entry>
+
+    <entry key="api_base_url_local_geny">http://10.0.3.2:9091</entry>
+    <entry key="terminal_payment_api_url_local_geny">http://10.0.3.2:1236</entry>
+    <entry key="merchant_registry_base_url_local_geny">http://10.0.3.2:9095</entry>
+    <entry key="remote_log_upload_base_url_local_geny">http://10.0.3.2:9071</entry>
+    <entry key="report_api_base_url_local_geny">http://10.0.3.2:9119</entry>
+
+</properties>
