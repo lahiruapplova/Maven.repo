@@ -2,9 +2,14 @@ package io.applova.testautomation.common;
 
 import io.applova.testautomation.common.httpRequests.HttpRequest;
 import io.applova.testautomation.common.tokens.UserToken;
+import io.applova.testautomation.common.utils.CartItem;
+import io.applova.testautomation.common.utils.CartPurchase;
+import io.applova.testautomation.common.utils.Product;
 import io.applova.testautomation.common.utils.Property;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static io.applova.testautomation.common.httpRequests.HttpRequest.sendHttpRequest;
 
@@ -37,9 +42,33 @@ public class CartApi {
         },businessId);
     }
 
-    public static void addMultipleProductsToCart(String businessId,String userEmail,String userPassword,List<String> productsId, List<String> variantId) {
+    public static void addProductToCart(String productId,String variantId, String userToken) {
+        String template = "{\"purchases\":[{\"productId\":\"%s\",\"variantId\":\"%s\",\"cartItemId\":null,\"lineItemId\":\"\",\"quantity\":1,\"addOnSubTypeIds\":[],\"note\":null,\"servingBatchNumber\":1,\"cartSource\":null}],\"reservationId\":null,\"rewardName\":null,\"rewardsId\":0}";
+        String requestBody = String.format(template, productId, variantId);
+        String apiUrl = Property.API_BASE_URL + "/business/web/" + businessId + "/cart";
+        HttpRequest.sendHttpRequest(apiUrl,"PUT" , userToken, requestBody);
+        System.out.println("success: addProductToCart ✅");
+    }
+
+    public static void addMultipleProductsToCart(List<String> productsId, List<String> variantId) {
+        List<CartItem> cartItems = new ArrayList<>();
         for (int i = 0; i < productsId.size(); i++) {
-            addProductToCart(productsId.get(i), variantId.get(i));
+            CartItem cartItem = new CartItem();
+            cartItem.setProductId(productsId.get(i));
+            cartItem.setVariantId(variantId.get(i));
+            cartItems.add(cartItem);
         }
+        CartPurchase cartPurchase = new CartPurchase();
+        cartPurchase.setPurchases(cartItems);
+        cartPurchase.setReservationId(null);
+        cartPurchase.setRewardName(null);
+        cartPurchase.setRewardsId(0);
+        String requestBody = cartPurchase.toString();
+        System.out.println(requestBody);
+        Authentication.getUserToken(new UserToken(userEmail, userPassword), (token) -> {
+            String apiUrl = Property.API_BASE_URL + "/business/web/" + businessId + "/cart";
+            HttpRequest.sendHttpRequest(apiUrl,"PUT" , token, requestBody);
+            System.out.println("success: addProductToCart ✅");
+        },businessId);
     }
 }

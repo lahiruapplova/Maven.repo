@@ -49,4 +49,24 @@ public class Authentication {
         System.out.println("success: getUserToken ✅");
         authenticationCallback.onComplete(token);
     }
+
+    public static String getUserToken(UserToken userToken,String businessId) {
+        System.out.println("start: getUerToken ↺");
+        String url = Property.API_BASE_URL+"/business/"+businessId+"/user/login";
+
+        String token = RestAssured.given()
+                .contentType(ContentType.JSON)
+                .headers("Content-Type", "application/json")
+                .body(userToken)
+                .post(url)
+                .then()
+                .extract()
+                .jsonPath()
+                .getString("token");
+        return token;
+    }
+
+    public static void getUserToken(String userToken, AuthenticationCallback authenticationCallback) {
+        authenticationCallback.onComplete(userToken);
+    }
 }
