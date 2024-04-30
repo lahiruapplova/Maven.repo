@@ -19,7 +19,6 @@ public class main {
         Property.merchantEmail = "applova.qa.automation@gmail.com";
         Property.merchantPassword = "Applova@2021";
         System.out.println(TaxApi.getFirstTaxIdFromTaxesList());
-
         ProductsApi.assignTaxToProduct("PRD_aahmef3fob3d",TaxApi.getFirstTaxIdFromTaxesList());
     }
 }

@@ -71,4 +71,47 @@ public class CartApi {
             System.out.println("success: addProductToCart ✅");
         },businessId);
     }
+
+    public static void addProductToCartAsObject(Product product) {
+        CartItem cartItem = new CartItem();
+        cartItem.setProductId(product.getProductId());
+        cartItem.setVariantId(product.getVariants().getTypes().get(0).getSku());
+        List<CartItem> cartItems = new ArrayList<>();
+        cartItems.add(cartItem);
+        CartPurchase cartPurchase = new CartPurchase();
+        cartPurchase.setPurchases(cartItems);
+        cartPurchase.setReservationId(null);
+        cartPurchase.setRewardName(null);
+        cartPurchase.setRewardsId(0);
+        String requestBody = cartPurchase.toString();
+        System.out.println(requestBody);
+        Authentication.getUserToken(new UserToken(userEmail, userPassword), (token) -> {
+            String apiUrl = Property.API_BASE_URL + "/business/web/" + businessId + "/cart";
+            HttpRequest.sendHttpRequest(apiUrl,"PUT" , token, requestBody);
+            System.out.println("success: addProductToCart ✅");
+        },businessId);
+    }
+
+    public static void addMultipleProductsToCartAsObject(List<Product> products) {
+        List<CartItem> cartItems = new ArrayList<>();
+        for (Product product : products) {
+            CartItem cartItem = new CartItem();
+            cartItem.setProductId(product.getProductId());
+            cartItem.setVariantId(product.getVariants().getTypes().get(0).getSku());
+            cartItem.setAddOnSubTypeIds(product.getAddOns());
+            cartItems.add(cartItem);
+        }
+        CartPurchase cartPurchase = new CartPurchase();
+        cartPurchase.setPurchases(cartItems);
+        cartPurchase.setReservationId(null);
+        cartPurchase.setRewardName(null);
+        cartPurchase.setRewardsId(0);
+        String requestBody = cartPurchase.toString();
+        System.out.println(requestBody);
+        Authentication.getUserToken(new UserToken(userEmail, userPassword), (token) -> {
+            String apiUrl = Property.API_BASE_URL + "/business/web/" + businessId + "/cart";
+            HttpRequest.sendHttpRequest(apiUrl, "PUT", token, requestBody);
+            System.out.println("success: addProductToCart ✅");
+        }, businessId);
+    }
 }

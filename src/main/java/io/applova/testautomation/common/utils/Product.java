@@ -35,28 +35,6 @@ public class Product {
 }
 
 @Data
-class Variants {
-    private String name;
-    private String alternativeName;
-    private List<Types> types;
-
-}
-
-@Data
-class Types {
-    private String name;
-    private String alternativeName;
-    private String sku;
-    private Price price;
-    private String description;
-    private List<String> durationGroupPrices;
-    private String promotionalPrice;
-    private List<String> disabledGroups;
-    private String displaySku;
-    private Map<String, Integer> inventoryDetails;
-}
-
-@Data
 class Price {
     private Currency currency;
     private double amount;
