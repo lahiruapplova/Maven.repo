@@ -4,6 +4,7 @@ import io.applova.testautomation.common.utils.Property;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPatch;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -37,6 +38,38 @@ public class AdminApi {
         String url = tbLink + "/admin/merchants/businesses/" + businessId;
         String requestBody = "[{\"op\":\"remove\",\"path\":\"/serviceChargePercentage\",\"value\":\"null\"}]";
         HttpPatch httpPatch = new HttpPatch(url);
+        httpPatch.setEntity(new StringEntity(requestBody, ContentType.APPLICATION_JSON));
+        try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
+            HttpResponse response = httpClient.execute(httpPatch);
+            HttpEntity entity = response.getEntity();
+            if (entity != null) {
+                System.out.println(EntityUtils.toString(entity));
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void addTippingForBusiness(String businessId){
+        String url = tbLink + "/admin/merchants/businesses/" + businessId+"/addon-activations";
+        String requestBody = "{\"addOnSelections\":[{\"addOnId\":\"Apptizer-Tipping\",\"count\":1,\"action\":\"ADD\",\"additionalInfos\":[]}]}";
+        HttpPost httpPatch = new HttpPost(url);
+        httpPatch.setEntity(new StringEntity(requestBody, ContentType.APPLICATION_JSON));
+        try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
+            HttpResponse response = httpClient.execute(httpPatch);
+            HttpEntity entity = response.getEntity();
+            if (entity != null) {
+                System.out.println(EntityUtils.toString(entity));
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void deleteTippingForBusiness(String businessId){
+        String url = tbLink + "/admin/merchants/businesses/" + businessId+"/addon-activations";
+        String requestBody = "{\"addOnSelections\":[{\"addOnId\":\"Apptizer-Tipping\",\"count\":1,\"action\":\"DELETE\",\"additionalInfos\":[]}]}";
+        HttpPost httpPatch = new HttpPost(url);
         httpPatch.setEntity(new StringEntity(requestBody, ContentType.APPLICATION_JSON));
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
             HttpResponse response = httpClient.execute(httpPatch);
