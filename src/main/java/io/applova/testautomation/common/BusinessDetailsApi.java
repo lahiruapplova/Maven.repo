@@ -35,4 +35,25 @@ public class BusinessDetailsApi {
         return timezone;
     }
 
+    public static String getBusinessThemeColor(){
+        AtomicReference<String> businessDetails = new AtomicReference<>();
+        String themColor = null;
+        String url = tbLink+"/mgmt/merchants/businesses/"+businessId;
+        MerchantToken merchantToken = new MerchantToken(merchantEmail, merchantPassword);
+        Authentication.getMerchantToken(merchantToken,(token) -> {
+            businessDetails.set (sendHttpRequest(url, "GET", token));
+            System.out.println("success: getBusinessThemeColor  ✅");
+        });
+
+        String businessInfo = businessDetails.get();
+        try {
+            JSONObject jsonObject = new JSONObject(businessInfo);
+            themColor = jsonObject.getJSONObject("business").getJSONObject("appConfig").getJSONObject("appFeatures")
+                    .getJSONObject("androidConfig").getString("themeColor");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return themColor;
+    }
+
 }
